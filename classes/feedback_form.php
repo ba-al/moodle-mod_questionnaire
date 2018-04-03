@@ -135,6 +135,20 @@ class feedback_form extends \moodleform {
 
         $buttonarray[] = &$mform->createElement('cancel');
         $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+
+        //// for non-linear navigation: user can jump to a selected section
+        // array of possible section numbers
+        $options = [];
+        for($i=1; $i<=$feedbacksections; $i++){
+            $options[$i] = $i;
+        }
+
+        // submit button and drop down menu
+        $nextSection[] = &$mform->createElement('submit', 'submitbuttonSection',
+            get_string('feedbacknextsection', 'questionnaire', ':'));
+        $nextSection[] = &$mform->createElement('select', 'next_feedbacksection', "", $options);
+
+        $mform->addGroup($nextSection, 'buttonar2', '', array(' '), false);
     }
 
     public function data_preprocessing(&$toform) {

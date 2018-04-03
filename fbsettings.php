@@ -142,6 +142,14 @@ if (isset($settings->savesettings)) {
 } else if (isset($settings->submitbutton)) {
     $SESSION->questionnaire->currentfbsection ++;
     redirect ($CFG->wwwroot.'/mod/questionnaire/fbsettings.php?id='.$questionnaire->cm->id, '', 0);
+} else if (isset($settings->submitbuttonSection)) {
+    // non-linear navigation: user can jump to a selected section
+    $next_feedbacksection = $settings->next_feedbacksection;
+    if($next_feedbacksection >= 1 && $next_feedbacksection <= $feedbacksections){
+        // check range, because user can manipulate the input field
+        $SESSION->questionnaire->currentfbsection = $next_feedbacksection;
+    }
+    redirect ($CFG->wwwroot.'/mod/questionnaire/fbsettings.php?id='.$questionnaire->cm->id, '', 0);
 }
 
 // Print the page header.
